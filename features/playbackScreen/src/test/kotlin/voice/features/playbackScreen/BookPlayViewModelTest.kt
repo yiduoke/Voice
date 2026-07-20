@@ -263,21 +263,21 @@ class BookPlayViewModelTest {
     every { player.setSpeed(any()) } just Runs
     every { player.setPitch(any()) } just Runs
 
-    viewModel.onSpeedStep(0.1F)
+    viewModel.onSpeedStep(0.05F)
     yield()
     verify(exactly = 1) {
-      player.setSpeed(1.1F)
+      player.setSpeed(1.05F)
     }
 
-    playbackPitchStore.updateData { 1.95F }
-    viewModel.onPitchStep(0.1F)
+    playbackPitchStore.updateData { 2F }
+    viewModel.onPitchStep(0.05F)
     yield()
     verify(exactly = 1) {
       player.setPitch(2F)
     }
 
-    playbackPitchStore.updateData { 0.55F }
-    viewModel.onPitchStep(-0.1F)
+    playbackPitchStore.updateData { 0.5F }
+    viewModel.onPitchStep(-0.05F)
     yield()
     verify(exactly = 1) {
       player.setPitch(0.5F)

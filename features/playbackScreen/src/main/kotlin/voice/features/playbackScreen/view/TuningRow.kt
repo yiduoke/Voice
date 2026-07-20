@@ -95,4 +95,4 @@ private fun StepperRow(
   }
 }
 
-private const val TUNING_STEP = 0.1F
+private const val TUNING_STEP = 0.05F
