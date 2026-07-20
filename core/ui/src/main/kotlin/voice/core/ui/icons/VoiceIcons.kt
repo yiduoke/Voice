@@ -2407,6 +2407,106 @@ object VoiceIcons {
    * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/search.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
    * Generated: 2026-06-20T11:13:08Z
    */
+  val Pause: ImageVector =
+    ImageVector.Builder(
+      name = "Pause",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(6f, 19f)
+          horizontalLineToRelative(4f)
+          verticalLineTo(5f)
+          horizontalLineTo(6f)
+          verticalLineToRelative(14f)
+          close()
+          moveTo(14f, 5f)
+          verticalLineToRelative(14f)
+          horizontalLineToRelative(4f)
+          verticalLineTo(5f)
+          close()
+        }
+      }
+      .build()
+
+  val PlayArrow: ImageVector =
+    ImageVector.Builder(
+      name = "PlayArrow",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(8f, 5f)
+          verticalLineToRelative(14f)
+          lineToRelative(11f, -7f)
+          close()
+        }
+      }
+      .build()
+
+  val Replay: ImageVector =
+    ImageVector.Builder(
+      name = "Replay",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(12f, 5f)
+          verticalLineTo(1f)
+          lineTo(7f, 6f)
+          lineToRelative(5f, 5f)
+          verticalLineTo(7f)
+          curveToRelative(3.31f, 0f, 6f, 2.69f, 6f, 6f)
+          reflectiveCurveToRelative(-2.69f, 6f, -6f, 6f)
+          reflectiveCurveToRelative(-6f, -2.69f, -6f, -6f)
+          horizontalLineTo(4f)
+          curveToRelative(0f, 4.42f, 3.58f, 8f, 8f, 8f)
+          reflectiveCurveToRelative(8f, -3.58f, 8f, -8f)
+          reflectiveCurveToRelative(-3.58f, -8f, -8f, -8f)
+          close()
+        }
+      }
+      .build()
+
   val Search: ImageVector =
     ImageVector.Builder(
       name = "Search",

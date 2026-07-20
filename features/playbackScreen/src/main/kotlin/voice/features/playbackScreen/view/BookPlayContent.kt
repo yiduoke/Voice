@@ -39,7 +39,11 @@ internal fun BookPlayContent(
       CoverRow(
         bookId = bookId,
         cover = viewState.cover,
+        playing = viewState.playing,
+        seekTimeInSeconds = viewState.seekTimeInSeconds,
         onPlayClick = onPlayClick,
+        onRewindClick = onRewindClick,
+        onFastForwardClick = onFastForwardClick,
         sleepTimerState = viewState.sleepTimerState,
         modifier = Modifier
           .fillMaxHeight()
@@ -94,7 +98,11 @@ internal fun BookPlayContent(
       CoverRow(
         bookId = bookId,
         onPlayClick = onPlayClick,
+        onRewindClick = onRewindClick,
+        onFastForwardClick = onFastForwardClick,
         cover = viewState.cover,
+        playing = viewState.playing,
+        seekTimeInSeconds = viewState.seekTimeInSeconds,
         sleepTimerState = viewState.sleepTimerState,
         modifier = Modifier
           .fillMaxWidth()

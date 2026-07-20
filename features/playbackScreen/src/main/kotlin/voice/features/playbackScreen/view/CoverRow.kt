@@ -20,12 +20,24 @@ import voice.features.playbackScreen.BookPlayViewState
 internal fun CoverRow(
   bookId: BookId,
   cover: String?,
+  playing: Boolean,
+  seekTimeInSeconds: Int,
   sleepTimerState: BookPlayViewState.SleepTimerViewState,
   onPlayClick: () -> Unit,
+  onRewindClick: () -> Unit,
+  onFastForwardClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Box(modifier) {
-    Cover(bookId = bookId, onDoubleClick = onPlayClick, cover = cover)
+    Cover(
+      bookId = bookId,
+      playing = playing,
+      seekTimeInSeconds = seekTimeInSeconds,
+      cover = cover,
+      onPlayPause = onPlayClick,
+      onRewind = onRewindClick,
+      onFastForward = onFastForwardClick,
+    )
     when (sleepTimerState) {
       BookPlayViewState.SleepTimerViewState.Disabled -> {
       }

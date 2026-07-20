@@ -37,9 +37,9 @@ internal fun SkipButton(
   ) {
     Icon(
       modifier = Modifier
-        .size(48.dp)
+        .size(44.dp)
         .scale(scaleX = if (forward) -1f else 1F, scaleY = 1f),
-      imageVector = VoiceIcons.Undo,
+      imageVector = VoiceIcons.Replay,
       contentDescription = stringResource(
         id = if (forward) {
           R.string.playback_action_fast_forward
@@ -51,7 +51,7 @@ internal fun SkipButton(
     Text(
       text = seekTimeInSeconds.toString(),
       style = MaterialTheme.typography.labelMedium,
-      modifier = Modifier.offset(y = 4.dp),
+      modifier = Modifier.offset(y = 2.dp),
     )
   }
 }
