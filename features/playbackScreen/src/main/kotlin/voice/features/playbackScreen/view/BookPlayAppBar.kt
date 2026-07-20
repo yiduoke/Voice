@@ -26,10 +26,8 @@ internal fun BookPlayAppBar(
   onSleepTimerClick: () -> Unit,
   onBookmarkClick: () -> Unit,
   onBookmarkLongClick: () -> Unit,
-  onSpeedChangeClick: () -> Unit,
   onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
-  onPitchClick: () -> Unit,
   onCloseClick: () -> Unit,
   useLandscapeLayout: Boolean,
 ) {
@@ -61,17 +59,10 @@ internal fun BookPlayAppBar(
         contentDescription = stringResource(id = R.string.bookmark_title),
       )
     }
-    IconButton(onClick = onSpeedChangeClick) {
-      Icon(
-        imageVector = VoiceIcons.Speed,
-        contentDescription = stringResource(id = R.string.playback_speed_title),
-      )
-    }
     OverflowMenu(
       skipSilence = viewState.skipSilence,
       onSkipSilenceClick = onSkipSilenceClick,
       onVolumeBoostClick = onVolumeBoostClick,
-      onPitchClick = onPitchClick,
     )
   }
   if (useLandscapeLayout) {

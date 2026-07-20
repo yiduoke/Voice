@@ -259,6 +259,32 @@ class BookPlayViewModelTest {
   }
 
   @Test
+  fun `speed and pitch steppers round and clamp`() = scope.runTest {
+    every { player.setSpeed(any()) } just Runs
+    every { player.setPitch(any()) } just Runs
+
+    viewModel.onSpeedStep(0.1F)
+    yield()
+    verify(exactly = 1) {
+      player.setSpeed(1.1F)
+    }
+
+    playbackPitchStore.updateData { 1.95F }
+    viewModel.onPitchStep(0.1F)
+    yield()
+    verify(exactly = 1) {
+      player.setPitch(2F)
+    }
+
+    playbackPitchStore.updateData { 0.55F }
+    viewModel.onPitchStep(-0.1F)
+    yield()
+    verify(exactly = 1) {
+      player.setPitch(0.5F)
+    }
+  }
+
+  @Test
   fun `overlay prefers live controller position`() {
     val persistedBook = book()
     val overlaidBook = persistedBook.overlay(

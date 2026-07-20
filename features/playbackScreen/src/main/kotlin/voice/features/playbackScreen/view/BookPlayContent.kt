@@ -28,6 +28,10 @@ internal fun BookPlayContent(
   onSkipToNext: () -> Unit,
   onSkipToPrevious: () -> Unit,
   onCurrentChapterClick: () -> Unit,
+  onSpeedStep: (Float) -> Unit,
+  onPitchStep: (Float) -> Unit,
+  onSpeedValueClick: () -> Unit,
+  onPitchValueClick: () -> Unit,
   useLandscapeLayout: Boolean,
 ) {
   if (useLandscapeLayout) {
@@ -62,6 +66,18 @@ internal fun BookPlayContent(
           duration = viewState.duration,
           playedTime = viewState.playedTime,
           onSeek = onSeek,
+        )
+        Spacer(modifier = Modifier.size(16.dp))
+        TuningRow(
+          playbackSpeed = viewState.playbackSpeed,
+          pitch = viewState.pitch,
+          onSpeedStep = onSpeedStep,
+          onPitchStep = onPitchStep,
+          onSpeedValueClick = onSpeedValueClick,
+          onPitchValueClick = onPitchValueClick,
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         )
         Spacer(modifier = Modifier.size(16.dp))
         PlaybackRow(
@@ -99,6 +115,18 @@ internal fun BookPlayContent(
         duration = viewState.duration,
         playedTime = viewState.playedTime,
         onSeek = onSeek,
+      )
+      Spacer(modifier = Modifier.size(16.dp))
+      TuningRow(
+        playbackSpeed = viewState.playbackSpeed,
+        pitch = viewState.pitch,
+        onSpeedStep = onSpeedStep,
+        onPitchStep = onPitchStep,
+        onSpeedValueClick = onSpeedValueClick,
+        onPitchValueClick = onPitchValueClick,
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 16.dp),
       )
       Spacer(modifier = Modifier.size(16.dp))
       PlaybackRow(

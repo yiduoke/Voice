@@ -30,6 +30,8 @@ internal fun BookPlayView(
   onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
   onPitchClick: () -> Unit,
+  onSpeedStep: (Float) -> Unit,
+  onPitchStep: (Float) -> Unit,
   onSkipToNext: () -> Unit,
   onSkipToPrevious: () -> Unit,
   onCloseClick: () -> Unit,
@@ -46,10 +48,8 @@ internal fun BookPlayView(
         onSleepTimerClick = onSleepTimerClick,
         onBookmarkClick = onBookmarkClick,
         onBookmarkLongClick = onBookmarkLongClick,
-        onSpeedChangeClick = onSpeedChangeClick,
         onSkipSilenceClick = onSkipSilenceClick,
         onVolumeBoostClick = onVolumeBoostClick,
-        onPitchClick = onPitchClick,
         onCloseClick = onCloseClick,
         useLandscapeLayout = useLandscapeLayout,
       )
@@ -66,6 +66,10 @@ internal fun BookPlayView(
         onSkipToNext = onSkipToNext,
         onSkipToPrevious = onSkipToPrevious,
         onCurrentChapterClick = onCurrentChapterClick,
+        onSpeedStep = onSpeedStep,
+        onPitchStep = onPitchStep,
+        onSpeedValueClick = onSpeedChangeClick,
+        onPitchValueClick = onPitchClick,
         useLandscapeLayout = useLandscapeLayout,
       )
     },
@@ -93,6 +97,8 @@ private fun BookPlayPreview(
       onSkipSilenceClick = {},
       onVolumeBoostClick = {},
       onPitchClick = {},
+      onSpeedStep = {},
+      onPitchStep = {},
       onSkipToNext = {},
       onSkipToPrevious = {},
       onCloseClick = {},
@@ -114,6 +120,8 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       skipSilence = true,
       sleepTimerState = BookPlayViewState.SleepTimerViewState.Disabled,
       title = "Das Ende der Welt",
+      playbackSpeed = 1.2F,
+      pitch = 1.4F,
     )
     yield(initial)
     yield(

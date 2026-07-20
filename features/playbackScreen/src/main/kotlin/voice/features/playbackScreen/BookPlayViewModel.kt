@@ -47,6 +47,7 @@ import voice.features.playbackScreen.batteryOptimization.BatteryOptimization
 import voice.features.sleepTimer.SleepTimerViewState
 import voice.navigation.Destination
 import voice.navigation.Navigator
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
@@ -128,6 +129,7 @@ class BookPlayViewModel(
       book.content.positionInChapter - currentMark.startMs
     }
 
+    val pitch = remember { playbackPitchStore.data }.collectAsState(initial = 1F).value
     val sleepTime = remember { sleepTimer.state }.collectAsState().value
     val hasMoreThanOneChapter = book.chapters.sumOf { it.chapterMarks.count() } > 1
     return BookPlayViewState(
@@ -140,6 +142,8 @@ class BookPlayViewModel(
       playedTime = positionInCurrentMark.milliseconds,
       cover = book.content.coverUrl,
       skipSilence = book.content.skipSilence,
+      playbackSpeed = book.content.playbackSpeed,
+      pitch = pitch,
     )
   }
 
@@ -156,6 +160,8 @@ class BookPlayViewModel(
       playedTime = 10.hours + 24.minutes,
       cover = book.coverUrl,
       skipSilence = false,
+      playbackSpeed = 1F,
+      pitch = 1F,
     )
   }
 
@@ -221,6 +227,28 @@ class BookPlayViewModel(
   fun onPlaybackSpeedChanged(speed: Float) {
     dialogState.value = BookPlayDialogViewState.SpeedDialog(speed)
     player.setSpeed(speed)
+  }
+
+  fun onSpeedStep(delta: Float) {
+    scope.launch {
+      val current = currentBook()?.content?.playbackSpeed ?: return@launch
+      player.setSpeed(steppedValue(current, delta, max = 3.5F))
+    }
+  }
+
+  fun onPitchStep(delta: Float) {
+    scope.launch {
+      val current = playbackPitchStore.data.first()
+      player.setPitch(steppedValue(current, delta, max = 2F))
+    }
+  }
+
+  private fun steppedValue(
+    current: Float,
+    delta: Float,
+    max: Float,
+  ): Float {
+    return (((current + delta) * 100).roundToInt() / 100F).coerceIn(0.5F, max)
   }
 
   fun onPlaybackPitchChanged(pitch: Float) {
