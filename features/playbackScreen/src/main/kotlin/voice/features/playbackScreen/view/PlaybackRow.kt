@@ -15,6 +15,7 @@ import voice.core.ui.playButtonSharedBoundsModifier
 @Composable
 internal fun PlaybackRow(
   playing: Boolean,
+  seekTimeInSeconds: Int,
   onPlayClick: () -> Unit,
   onRewindClick: () -> Unit,
   onFastForwardClick: () -> Unit,
@@ -25,7 +26,7 @@ internal fun PlaybackRow(
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center,
   ) {
-    SkipButton(forward = false, onClick = onRewindClick)
+    SkipButton(forward = false, seekTimeInSeconds = seekTimeInSeconds, onClick = onRewindClick)
     Spacer(modifier = Modifier.size(16.dp))
 
     PlayButton(
@@ -36,6 +37,6 @@ internal fun PlaybackRow(
       sharedElementModifier = Modifier.playButtonSharedBoundsModifier(),
     )
     Spacer(modifier = Modifier.size(16.dp))
-    SkipButton(forward = true, onClick = onFastForwardClick)
+    SkipButton(forward = true, seekTimeInSeconds = seekTimeInSeconds, onClick = onFastForwardClick)
   }
 }

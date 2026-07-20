@@ -122,6 +122,7 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       title = "Das Ende der Welt",
       playbackSpeed = 1.2F,
       pitch = 1.4F,
+      seekTimeInSeconds = 30,
     )
     yield(initial)
     yield(

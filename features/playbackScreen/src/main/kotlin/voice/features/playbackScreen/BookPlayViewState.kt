@@ -18,6 +18,7 @@ data class BookPlayViewState(
   val skipSilence: Boolean,
   val playbackSpeed: Float,
   val pitch: Float,
+  val seekTimeInSeconds: Int,
 ) {
 
   sealed interface SleepTimerViewState {

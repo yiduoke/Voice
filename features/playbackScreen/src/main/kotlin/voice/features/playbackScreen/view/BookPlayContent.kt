@@ -82,6 +82,7 @@ internal fun BookPlayContent(
         Spacer(modifier = Modifier.size(16.dp))
         PlaybackRow(
           playing = viewState.playing,
+          seekTimeInSeconds = viewState.seekTimeInSeconds,
           onPlayClick = onPlayClick,
           onRewindClick = onRewindClick,
           onFastForwardClick = onFastForwardClick,
@@ -131,6 +132,7 @@ internal fun BookPlayContent(
       Spacer(modifier = Modifier.size(16.dp))
       PlaybackRow(
         playing = viewState.playing,
+        seekTimeInSeconds = viewState.seekTimeInSeconds,
         onPlayClick = onPlayClick,
         onRewindClick = onRewindClick,
         onFastForwardClick = onFastForwardClick,

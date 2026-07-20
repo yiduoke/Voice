@@ -27,6 +27,7 @@ import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
 import voice.core.data.store.PlaybackPitchStore
+import voice.core.data.store.SeekTimeStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
@@ -71,6 +72,8 @@ class BookPlayViewModel(
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
   @PlaybackPitchStore
   private val playbackPitchStore: DataStore<Float>,
+  @SeekTimeStore
+  private val seekTimeStore: DataStore<Int>,
   @ExperimentalPlaybackPersistenceQualifier
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
@@ -130,6 +133,7 @@ class BookPlayViewModel(
     }
 
     val pitch = remember { playbackPitchStore.data }.collectAsState(initial = 1F).value
+    val seekTime = remember { seekTimeStore.data }.collectAsState(initial = 20).value
     val sleepTime = remember { sleepTimer.state }.collectAsState().value
     val hasMoreThanOneChapter = book.chapters.sumOf { it.chapterMarks.count() } > 1
     return BookPlayViewState(
@@ -144,6 +148,7 @@ class BookPlayViewModel(
       skipSilence = book.content.skipSilence,
       playbackSpeed = book.content.playbackSpeed,
       pitch = pitch,
+      seekTimeInSeconds = seekTime,
     )
   }
 
@@ -162,6 +167,7 @@ class BookPlayViewModel(
       skipSilence = false,
       playbackSpeed = 1F,
       pitch = 1F,
+      seekTimeInSeconds = 30,
     )
   }
 

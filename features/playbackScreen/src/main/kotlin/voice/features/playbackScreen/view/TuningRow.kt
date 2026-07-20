@@ -3,8 +3,10 @@ package voice.features.playbackScreen.view
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -69,9 +71,15 @@ private fun StepperRow(
     Text(
       text = label,
       style = MaterialTheme.typography.bodyMedium,
-      modifier = Modifier.weight(1F),
+      modifier = Modifier.width(56.dp),
     )
-    OutlinedIconButton(onClick = onDecrement) {
+    OutlinedIconButton(
+      onClick = onDecrement,
+      shape = RoundedCornerShape(12.dp),
+      modifier = Modifier
+        .width(52.dp)
+        .height(44.dp),
+    ) {
       Icon(
         imageVector = VoiceIcons.Remove,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_decrease),
@@ -82,11 +90,17 @@ private fun StepperRow(
       style = MaterialTheme.typography.titleMedium,
       textAlign = TextAlign.Center,
       modifier = Modifier
-        .width(72.dp)
+        .weight(1F)
         .clickable(onClick = onValueClick)
         .padding(vertical = 12.dp),
     )
-    OutlinedIconButton(onClick = onIncrement) {
+    OutlinedIconButton(
+      onClick = onIncrement,
+      shape = RoundedCornerShape(12.dp),
+      modifier = Modifier
+        .width(52.dp)
+        .height(44.dp),
+    ) {
       Icon(
         imageVector = VoiceIcons.Add,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_increase),
