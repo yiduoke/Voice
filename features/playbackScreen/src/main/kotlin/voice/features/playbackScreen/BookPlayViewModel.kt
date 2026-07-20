@@ -26,6 +26,7 @@ import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
+import voice.core.data.store.PlaybackPitchStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
@@ -67,6 +68,8 @@ class BookPlayViewModel(
   dispatcherProvider: DispatcherProvider,
   @SleepTimerPreferenceStore
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
+  @PlaybackPitchStore
+  private val playbackPitchStore: DataStore<Float>,
   @ExperimentalPlaybackPersistenceQualifier
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
@@ -220,6 +223,11 @@ class BookPlayViewModel(
     player.setSpeed(speed)
   }
 
+  fun onPlaybackPitchChanged(pitch: Float) {
+    dialogState.value = BookPlayDialogViewState.PitchDialog(pitch)
+    player.setPitch(pitch)
+  }
+
   fun onVolumeGainChanged(gain: Decibel) {
     dialogState.value = volumeGainDialogViewState(gain)
     player.setGain(gain)
@@ -297,6 +305,13 @@ class BookPlayViewModel(
     scope.launch {
       val playbackSpeed = currentBook()?.content?.playbackSpeed ?: return@launch
       dialogState.value = BookPlayDialogViewState.SpeedDialog(playbackSpeed)
+    }
+  }
+
+  fun onPitchIconClick() {
+    scope.launch {
+      val pitch = playbackPitchStore.data.first()
+      dialogState.value = BookPlayDialogViewState.PitchDialog(pitch)
     }
   }
 

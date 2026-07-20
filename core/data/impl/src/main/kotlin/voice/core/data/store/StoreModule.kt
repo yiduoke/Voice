@@ -196,6 +196,13 @@ public interface StoreModule {
 
   @Provides
   @SingleIn(AppScope::class)
+  @PlaybackPitchStore
+  private fun playbackPitch(factory: VoiceDataStoreFactory): DataStore<Float> {
+    return factory.create(Float.serializer(), 1F, "playbackPitch")
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
   @FeatureFlagOverridesStore
   private fun featureFlagOverrides(factory: VoiceDataStoreFactory): DataStore<Map<String, FeatureFlagOverride>> {
     return factory.create(

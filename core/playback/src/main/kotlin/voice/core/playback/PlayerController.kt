@@ -189,6 +189,10 @@ class PlayerController(
     controller.sendCustomCommand(CustomCommand.SetGain(gain))
   }
 
+  fun setPitch(pitch: Float) = executeAfterPrepare { controller ->
+    controller.sendCustomCommand(CustomCommand.SetPitch(pitch))
+  }
+
   fun setVolume(volume: Float) = executeAfterPrepare {
     require(volume in 0F..1F)
     it.volume = volume

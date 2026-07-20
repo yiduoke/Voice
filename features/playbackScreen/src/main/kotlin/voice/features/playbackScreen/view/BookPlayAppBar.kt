@@ -29,6 +29,7 @@ internal fun BookPlayAppBar(
   onSpeedChangeClick: () -> Unit,
   onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
+  onPitchClick: () -> Unit,
   onCloseClick: () -> Unit,
   useLandscapeLayout: Boolean,
 ) {
@@ -70,6 +71,7 @@ internal fun BookPlayAppBar(
       skipSilence = viewState.skipSilence,
       onSkipSilenceClick = onSkipSilenceClick,
       onVolumeBoostClick = onVolumeBoostClick,
+      onPitchClick = onPitchClick,
     )
   }
   if (useLandscapeLayout) {

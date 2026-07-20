@@ -72,6 +72,7 @@ class BookPlayViewModelTest {
   }
 
   private val player = mockk<PlayerController>()
+  private val playbackPitchStore = MemoryDataStore(1F)
   private val playStateManager = mockk<PlayStateManager> {
     every { playStateFlow } returns MutableStateFlow(PlayStateManager.PlayState.Paused)
   }
@@ -106,6 +107,7 @@ class BookPlayViewModelTest {
     volumeGainFormatter = mockk(),
     batteryOptimization = mockk(),
     sleepTimerPreferenceStore = sleepTimerDataStore,
+    playbackPitchStore = playbackPitchStore,
     bookId = book.id,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
     experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
@@ -241,6 +243,22 @@ class BookPlayViewModelTest {
   }
 
   @Test
+  fun `pitch dialog shows stored pitch and updates on change`() = scope.runTest {
+    playbackPitchStore.updateData { 1.3F }
+
+    viewModel.onPitchIconClick()
+    yield()
+    assertEquals(expected = BookPlayDialogViewState.PitchDialog(1.3F), actual = viewModel.dialogState.value)
+
+    every { player.setPitch(any()) } just Runs
+    viewModel.onPlaybackPitchChanged(1.6F)
+    assertEquals(expected = BookPlayDialogViewState.PitchDialog(1.6F), actual = viewModel.dialogState.value)
+    verify(exactly = 1) {
+      player.setPitch(1.6F)
+    }
+  }
+
+  @Test
   fun `overlay prefers live controller position`() {
     val persistedBook = book()
     val overlaidBook = persistedBook.overlay(
@@ -348,6 +366,7 @@ class BookPlayViewModelTest {
       volumeGainFormatter = mockk(),
       batteryOptimization = mockk(),
       sleepTimerPreferenceStore = sleepTimerDataStore,
+      playbackPitchStore = MemoryDataStore(1F),
       bookId = book.id,
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(experimentalPlaybackPersistence),

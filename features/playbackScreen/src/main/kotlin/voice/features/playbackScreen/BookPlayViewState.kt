@@ -42,6 +42,8 @@ internal sealed interface BookPlayDialogViewState {
     val maxSpeed: Float get() = if (speed < 2F) 2F else 3.5F
   }
 
+  data class PitchDialog(val pitch: Float) : BookPlayDialogViewState
+
   data class VolumeGainDialog(
     val gain: Decibel,
     val valueFormatted: String,

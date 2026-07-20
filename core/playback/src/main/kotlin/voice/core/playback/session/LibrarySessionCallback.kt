@@ -214,6 +214,9 @@ class LibrarySessionCallback(
       is CustomCommand.SetGain -> {
         player.setGain(command.gain)
       }
+      is CustomCommand.SetPitch -> {
+        player.setPitch(command.pitch)
+      }
     }
 
     return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))

@@ -68,6 +68,7 @@ fun BookPlayScreen(bookId: BookId) {
     onSkipSilenceClick = viewModel::toggleSkipSilence,
     onSleepTimerClick = viewModel::toggleSleepTimer,
     onVolumeBoostClick = viewModel::onVolumeGainIconClick,
+    onPitchClick = viewModel::onPitchIconClick,
     onSpeedChangeClick = viewModel::onPlaybackSpeedIconClick,
     onCloseClick = viewModel::onCloseClick,
     onSkipToNext = viewModel::next,
@@ -80,6 +81,9 @@ fun BookPlayScreen(bookId: BookId) {
     when (dialogState) {
       is BookPlayDialogViewState.SpeedDialog -> {
         SpeedDialog(dialogState, viewModel)
+      }
+      is BookPlayDialogViewState.PitchDialog -> {
+        PitchDialog(dialogState, viewModel)
       }
       is BookPlayDialogViewState.VolumeGainDialog -> {
         VolumeGainDialog(dialogState, viewModel)

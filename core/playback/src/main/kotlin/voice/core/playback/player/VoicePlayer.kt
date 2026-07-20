@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.media3.common.C
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import dev.zacsweers.metro.Inject
@@ -17,6 +18,7 @@ import voice.core.data.BookId
 import voice.core.data.repo.BookRepository
 import voice.core.data.store.AutoRewindAmountStore
 import voice.core.data.store.CurrentBookStore
+import voice.core.data.store.PlaybackPitchStore
 import voice.core.data.store.SeekTimeStore
 import voice.core.logging.api.Logger
 import voice.core.playback.misc.Decibel
@@ -44,6 +46,8 @@ class VoicePlayer(
   private val seekTimeStore: DataStore<Int>,
   @AutoRewindAmountStore
   private val autoRewindAmountStore: DataStore<Int>,
+  @PlaybackPitchStore
+  private val playbackPitchStore: DataStore<Float>,
   private val mediaItemProvider: MediaItemProvider,
   private val scope: CoroutineScope,
   private val volumeGain: VolumeGain,
@@ -301,7 +305,8 @@ class VoicePlayer(
           repo.get(mediaId.id)
         }
         if (book != null) {
-          player.setPlaybackSpeed(book.content.playbackSpeed)
+          val pitch = runBlocking { playbackPitchStore.data.first() }
+          player.playbackParameters = PlaybackParameters(book.content.playbackSpeed, pitch)
           setSkipSilenceEnabled(book.content.skipSilence)
           volumeGain.gain = Decibel(book.content.gain)
           val currentPlaybackItem = book.playbackItemForPosition(
@@ -334,6 +339,13 @@ class VoicePlayer(
     }
     if (player is ExoPlayer) {
       player.skipSilenceEnabled = enabled
+    }
+  }
+
+  fun setPitch(pitch: Float) {
+    player.playbackParameters = player.playbackParameters.withPitch(pitch)
+    scope.launch {
+      playbackPitchStore.updateData { pitch }
     }
   }
 

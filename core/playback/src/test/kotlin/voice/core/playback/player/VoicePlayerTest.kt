@@ -15,6 +15,7 @@ import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -64,6 +65,7 @@ class VoicePlayerTest {
 
   private val seekTimeStore = MemoryDataStore(2)
   private val autoRewindAmountStore = MemoryDataStore(2)
+  private val playbackPitchStore = MemoryDataStore(1F)
 
   private val internalPlayer = TestExoPlayerBuilder(ApplicationProvider.getApplicationContext())
     .setMediaSourceFactory(
@@ -105,6 +107,7 @@ class VoicePlayerTest {
     },
     seekTimeStore = seekTimeStore,
     autoRewindAmountStore = autoRewindAmountStore,
+    playbackPitchStore = playbackPitchStore,
     scope = scope,
     mediaItemProvider = mediaItemProvider,
     volumeGain = mockk(relaxed = true),
@@ -342,6 +345,40 @@ class VoicePlayerTest {
     player.shouldHavePosition(1, 0)
     assertFalse(player.playWhenReady)
     assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun `setPitch applies pitch and persists it`() = scope.runTest {
+    setMediaItems(
+      listOf(
+        chapter(ChapterMark(startMs = 0, endMs = 10_000, name = null)),
+      ),
+    )
+
+    player.prepare()
+    awaitReady()
+
+    player.setPitch(1.5F)
+    advanceUntilIdle()
+
+    assertEquals(expected = 1.5F, actual = internalPlayer.playbackParameters.pitch)
+    assertEquals(expected = 1.5F, actual = playbackPitchStore.data.first())
+  }
+
+  @Test
+  fun `setBook applies persisted pitch`() = scope.runTest {
+    playbackPitchStore.updateData { 1.4F }
+    setMediaItems(
+      listOf(
+        chapter(ChapterMark(startMs = 0, endMs = 10_000, name = null)),
+      ),
+    )
+
+    player.prepare()
+    awaitReady()
+
+    assertEquals(expected = 1.4F, actual = internalPlayer.playbackParameters.pitch)
+    assertEquals(expected = 1F, actual = internalPlayer.playbackParameters.speed)
   }
 
   @Test

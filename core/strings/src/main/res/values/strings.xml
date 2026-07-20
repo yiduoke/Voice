@@ -175,6 +175,8 @@
     <string name="playback.chapter.next">Next track</string>
     <!-- Content description for moving to the previous chapter or track. -->
     <string name="playback.chapter.previous">Previous track</string>
+    <!-- Menu and dialog title for changing the playback pitch. -->
+    <string name="playback.option.pitch">Pitch</string>
     <!-- Menu label for toggling silence skipping during playback. -->
     <string name="playback.option.skip_silence">Skip Silence</string>
     <!-- Menu and dialog title for changing volume gain. -->
