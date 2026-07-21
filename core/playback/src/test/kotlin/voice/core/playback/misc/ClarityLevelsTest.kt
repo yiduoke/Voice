@@ -10,6 +10,7 @@ class ClarityLevelsTest {
     assertEquals(expected = 0F, actual = ClarityLevels.subBassGainDb(0))
     assertEquals(expected = 0F, actual = ClarityLevels.bassGainDb(0))
     assertEquals(expected = 0F, actual = ClarityLevels.presenceGainDb(0))
+    assertEquals(expected = 0F, actual = ClarityLevels.sparkleGainDb(0))
     assertEquals(expected = 1F, actual = ClarityLevels.compressionRatio(0))
     assertEquals(expected = 0F, actual = ClarityLevels.compressionPostGainDb(0))
   }
@@ -19,6 +20,7 @@ class ClarityLevelsTest {
     assertEquals(expected = -15F, actual = ClarityLevels.subBassGainDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = -10F, actual = ClarityLevels.bassGainDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = 9F, actual = ClarityLevels.presenceGainDb(ClarityLevels.MAX_LEVEL))
+    assertEquals(expected = 4.5F, actual = ClarityLevels.sparkleGainDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = 4F, actual = ClarityLevels.compressionRatio(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = -35F, actual = ClarityLevels.compressionThresholdDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = 18.75F, actual = ClarityLevels.compressionPostGainDb(ClarityLevels.MAX_LEVEL))

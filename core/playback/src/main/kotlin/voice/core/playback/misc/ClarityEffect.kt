@@ -18,6 +18,8 @@ object ClarityLevels {
 
   fun presenceGainDb(presence: Int): Float = 0.9F * presence
 
+  fun sparkleGainDb(presence: Int): Float = 0.45F * presence
+
   fun compressionRatio(compression: Int): Float = 1F + 0.3F * compression
 
   fun compressionThresholdDb(compression: Int): Float = -15F - 2F * compression
@@ -128,7 +130,11 @@ class ClarityEffectSetter {
       1,
       DynamicsProcessing.EqBand(true, PRESENCE_END_HZ, ClarityLevels.presenceGainDb(settings.presence)),
     )
-    setPostEqBandAllChannelsTo(2, DynamicsProcessing.EqBand(true, NYQUIST_CUTOFF_HZ, 0F))
+    setPostEqBandAllChannelsTo(
+      2,
+      DynamicsProcessing.EqBand(true, SPARKLE_CUTOFF_HZ, ClarityLevels.sparkleGainDb(settings.presence)),
+    )
+    setPostEqBandAllChannelsTo(3, DynamicsProcessing.EqBand(true, NYQUIST_CUTOFF_HZ, 0F))
 
     setMbcBandAllChannelsTo(
       0,
@@ -157,12 +163,13 @@ class ClarityEffectSetter {
   private companion object {
     const val CHANNEL_COUNT = 2
     const val PRE_EQ_BAND_COUNT = 3
-    const val POST_EQ_BAND_COUNT = 3
+    const val POST_EQ_BAND_COUNT = 4
     const val MBC_BAND_COUNT = 1
     const val SUB_BASS_CUTOFF_HZ = 150F
     const val BASS_CUTOFF_HZ = 300F
     const val PRESENCE_START_HZ = 1000F
     const val PRESENCE_END_HZ = 4000F
+    const val SPARKLE_CUTOFF_HZ = 7000F
     const val NYQUIST_CUTOFF_HZ = 20000F
     const val MBC_ATTACK_MS = 3F
     const val MBC_RELEASE_MS = 120F
