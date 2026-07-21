@@ -4,7 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -67,25 +69,30 @@ internal fun Cover(
         .fillMaxSize()
         .sharedCoverElementModifier(bookId)
         .pointerInput(Unit) {
-          detectTapGestures(
-            onTap = {
-              showPauseIcon = !currentPlaying
-              feedback = CoverTapFeedback.PlayPause
-              feedbackTrigger++
+          val doubleTapTimeout = viewConfiguration.doubleTapTimeoutMillis
+          var lastTapUpTime = 0L
+          awaitEachGesture {
+            awaitFirstDown()
+            val up = waitForUpOrCancellation() ?: return@awaitEachGesture
+            val isSecondTap = up.uptimeMillis - lastTapUpTime < doubleTapTimeout
+            if (isSecondTap) {
+              lastTapUpTime = 0L
               onPlayPause()
-            },
-            onDoubleTap = { offset ->
-              if (offset.x < size.width / 2) {
+              if (up.position.x < size.width / 2) {
                 feedback = CoverTapFeedback.Rewind
-                feedbackTrigger++
                 onRewind()
               } else {
                 feedback = CoverTapFeedback.FastForward
-                feedbackTrigger++
                 onFastForward()
               }
-            },
-          )
+            } else {
+              lastTapUpTime = up.uptimeMillis
+              showPauseIcon = !currentPlaying
+              feedback = CoverTapFeedback.PlayPause
+              onPlayPause()
+            }
+            feedbackTrigger++
+          }
         }
         .clip(RoundedCornerShape(20.dp)),
       contentScale = ContentScale.Crop,

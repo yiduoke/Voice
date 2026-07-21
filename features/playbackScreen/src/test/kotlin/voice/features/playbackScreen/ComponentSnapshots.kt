@@ -90,6 +90,58 @@ class ComponentSnapshots {
 
   @Test
   @Config(qualifiers = RobolectricDeviceQualifiers.Pixel7)
+  fun playbackScreen() {
+    captureRoboImage {
+      VoiceTheme {
+        BookPlayView(
+          viewState = BookPlayViewState(
+            chapterName = "Chapter one",
+            showPreviousNextButtons = true,
+            cover = null,
+            duration = 10.minutes,
+            playedTime = 3.minutes,
+            playing = true,
+            skipSilence = false,
+            sleepTimerState = BookPlayViewState.SleepTimerViewState.Disabled,
+            title = "Anna Karenina",
+            playbackSpeed = 1.1F,
+            pitch = 1F,
+            seekTimeInSeconds = 20,
+            clarity = ClaritySettings.Default,
+          ),
+          bookId = BookId("snapshot"),
+          useLandscapeLayout = false,
+          onPlayClick = {},
+          onRewindClick = {},
+          onFastForwardClick = {},
+          onSeek = {},
+          onSleepTimerClick = {},
+          onBookmarkClick = {},
+          onBookmarkLongClick = {},
+          onSpeedChangeClick = {},
+          onSkipSilenceClick = {},
+          onVolumeBoostClick = {},
+          onPitchClick = {},
+          onSpeedStep = {},
+          onPitchStep = {},
+          claritySheetVisible = false,
+          onClarityOpen = {},
+          onClarityDismiss = {},
+          onClarityToggle = {},
+          onClarityRumbleChange = {},
+          onClarityPresenceChange = {},
+          onClarityCompressionChange = {},
+          onSkipToNext = {},
+          onSkipToPrevious = {},
+          onCloseClick = {},
+          onCurrentChapterClick = {},
+        )
+      }
+    }
+  }
+
+  @Test
+  @Config(qualifiers = RobolectricDeviceQualifiers.Pixel7)
   fun claritySheetOnFullScreen() {
     captureRoboImage {
       VoiceTheme {

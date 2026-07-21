@@ -27,7 +27,7 @@ internal fun PlaybackRow(
     horizontalArrangement = Arrangement.Center,
   ) {
     SkipButton(forward = false, seekTimeInSeconds = seekTimeInSeconds, onClick = onRewindClick)
-    Spacer(modifier = Modifier.size(16.dp))
+    Spacer(modifier = Modifier.size(40.dp))
 
     PlayButton(
       playing = playing,
@@ -36,7 +36,7 @@ internal fun PlaybackRow(
       onPlayClick = onPlayClick,
       sharedElementModifier = Modifier.playButtonSharedBoundsModifier(),
     )
-    Spacer(modifier = Modifier.size(16.dp))
+    Spacer(modifier = Modifier.size(40.dp))
     SkipButton(forward = true, seekTimeInSeconds = seekTimeInSeconds, onClick = onFastForwardClick)
   }
 }
