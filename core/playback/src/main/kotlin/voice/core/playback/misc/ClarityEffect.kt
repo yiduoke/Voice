@@ -18,11 +18,17 @@ object ClarityLevels {
 
   fun presenceGainDb(presence: Int): Float = 0.9F * presence
 
-  fun compressionRatio(compression: Int): Float = 1F + 0.35F * compression
+  fun compressionRatio(compression: Int): Float = 1F + 0.3F * compression
 
-  fun compressionThresholdDb(compression: Int): Float = -20F - 2.5F * compression
+  fun compressionThresholdDb(compression: Int): Float = -15F - 2F * compression
 
-  fun compressionPostGainDb(compression: Int): Float = 0.8F * compression
+  fun compressionPostGainDb(compression: Int): Float {
+    val threshold = compressionThresholdDb(compression)
+    val ratio = compressionRatio(compression)
+    return (SPEECH_PEAK_DB - threshold) * (1F - 1F / ratio)
+  }
+
+  private const val SPEECH_PEAK_DB = -10F
 }
 
 @Inject

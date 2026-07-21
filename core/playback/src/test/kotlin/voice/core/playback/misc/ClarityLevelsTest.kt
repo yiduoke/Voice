@@ -19,8 +19,20 @@ class ClarityLevelsTest {
     assertEquals(expected = -15F, actual = ClarityLevels.subBassGainDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = -10F, actual = ClarityLevels.bassGainDb(ClarityLevels.MAX_LEVEL))
     assertEquals(expected = 9F, actual = ClarityLevels.presenceGainDb(ClarityLevels.MAX_LEVEL))
-    assertEquals(expected = 4.5F, actual = ClarityLevels.compressionRatio(ClarityLevels.MAX_LEVEL))
-    assertEquals(expected = -45F, actual = ClarityLevels.compressionThresholdDb(ClarityLevels.MAX_LEVEL))
-    assertEquals(expected = 8F, actual = ClarityLevels.compressionPostGainDb(ClarityLevels.MAX_LEVEL))
+    assertEquals(expected = 4F, actual = ClarityLevels.compressionRatio(ClarityLevels.MAX_LEVEL))
+    assertEquals(expected = -35F, actual = ClarityLevels.compressionThresholdDb(ClarityLevels.MAX_LEVEL))
+    assertEquals(expected = 18.75F, actual = ClarityLevels.compressionPostGainDb(ClarityLevels.MAX_LEVEL))
+  }
+
+  @Test
+  fun `makeup gain keeps loud speech at its original level`() {
+    for (level in 0..ClarityLevels.MAX_LEVEL) {
+      val threshold = ClarityLevels.compressionThresholdDb(level)
+      val ratio = ClarityLevels.compressionRatio(level)
+      val makeup = ClarityLevels.compressionPostGainDb(level)
+      val loudSpeechInDb = -10F
+      val compressed = threshold + (loudSpeechInDb - threshold) / ratio
+      assertEquals(expected = loudSpeechInDb, actual = compressed + makeup, absoluteTolerance = 0.01F)
+    }
   }
 }
