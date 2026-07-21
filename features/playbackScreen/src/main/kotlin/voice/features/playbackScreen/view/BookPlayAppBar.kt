@@ -67,25 +67,13 @@ internal fun BookPlayAppBar(
       onClarityClick = onClarityClick,
     )
   }
-  if (useLandscapeLayout) {
-    TopAppBar(
-      navigationIcon = {
-        CloseIcon(onCloseClick)
-      },
-      actions = appBarActions,
-      title = {
-        AppBarTitle(viewState.title)
-      },
-    )
-  } else {
-    LargeTopAppBar(
-      navigationIcon = {
-        CloseIcon(onCloseClick)
-      },
-      actions = appBarActions,
-      title = {
-        AppBarTitle(viewState.title)
-      },
-    )
-  }
+  TopAppBar(
+    navigationIcon = {
+      CloseIcon(onCloseClick)
+    },
+    actions = appBarActions,
+    title = {
+      AppBarTitle(viewState.title)
+    },
+  )
 }

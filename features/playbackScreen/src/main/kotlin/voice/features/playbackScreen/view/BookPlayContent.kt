@@ -124,6 +124,15 @@ internal fun BookPlayContent(
         .padding(contentPadding)
         .then(claritySwipeModifier),
     ) {
+      viewState.chapterName?.let { chapterName ->
+        ChapterRow(
+          chapterName = chapterName,
+          nextPreviousVisible = viewState.showPreviousNextButtons,
+          onSkipToNext = onSkipToNext,
+          onSkipToPrevious = onSkipToPrevious,
+          onCurrentChapterClick = onCurrentChapterClick,
+        )
+      }
       CoverRow(
         bookId = bookId,
         onPlayClick = onPlayClick,
@@ -136,25 +145,15 @@ internal fun BookPlayContent(
         modifier = Modifier
           .fillMaxWidth()
           .weight(1F)
-          .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+          .padding(start = 16.dp, end = 16.dp, top = 4.dp),
       )
-      viewState.chapterName?.let { chapterName ->
-        Spacer(modifier = Modifier.size(16.dp))
-        ChapterRow(
-          chapterName = chapterName,
-          nextPreviousVisible = viewState.showPreviousNextButtons,
-          onSkipToNext = onSkipToNext,
-          onSkipToPrevious = onSkipToPrevious,
-          onCurrentChapterClick = onCurrentChapterClick,
-        )
-      }
-      Spacer(modifier = Modifier.size(20.dp))
+      Spacer(modifier = Modifier.size(12.dp))
       SliderRow(
         duration = viewState.duration,
         playedTime = viewState.playedTime,
         onSeek = onSeek,
       )
-      Spacer(modifier = Modifier.size(16.dp))
+      Spacer(modifier = Modifier.size(12.dp))
       TuningRow(
         playbackSpeed = viewState.playbackSpeed,
         pitch = viewState.pitch,

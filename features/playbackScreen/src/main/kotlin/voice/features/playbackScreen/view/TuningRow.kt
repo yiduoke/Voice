@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -75,44 +76,46 @@ private fun StepperRow(
   ) {
     Text(
       text = label,
-      style = MaterialTheme.typography.titleMedium,
+      style = MaterialTheme.typography.titleLarge,
       fontWeight = FontWeight.Bold,
-      modifier = Modifier.width(64.dp),
+      modifier = Modifier.width(76.dp),
     )
     OutlinedIconButton(
       onClick = onDecrement,
-      shape = RoundedCornerShape(12.dp),
+      shape = RoundedCornerShape(14.dp),
       border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
       modifier = Modifier
-        .width(52.dp)
-        .height(44.dp),
+        .width(72.dp)
+        .height(56.dp),
     ) {
       Icon(
         imageVector = VoiceIcons.RemoveThick,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_decrease),
+        modifier = Modifier.size(30.dp),
       )
     }
     Text(
       text = valueFormatted,
-      style = MaterialTheme.typography.titleMedium,
+      style = MaterialTheme.typography.titleLarge,
       fontWeight = FontWeight.Bold,
       textAlign = TextAlign.Center,
       modifier = Modifier
         .weight(1F)
         .clickable(onClick = onValueClick)
-        .padding(vertical = 12.dp),
+        .padding(vertical = 16.dp),
     )
     OutlinedIconButton(
       onClick = onIncrement,
-      shape = RoundedCornerShape(12.dp),
+      shape = RoundedCornerShape(14.dp),
       border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
       modifier = Modifier
-        .width(52.dp)
-        .height(44.dp),
+        .width(72.dp)
+        .height(56.dp),
     ) {
       Icon(
         imageVector = VoiceIcons.AddThick,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_increase),
+        modifier = Modifier.size(30.dp),
       )
     }
   }
