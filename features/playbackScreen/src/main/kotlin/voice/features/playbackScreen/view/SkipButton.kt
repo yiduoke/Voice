@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import voice.core.strings.R
 import voice.core.ui.icons.VoiceIcons
@@ -33,13 +34,13 @@ internal fun SkipButton(
         onClick = onClick,
       )
       .size(48.dp),
-    contentAlignment = Alignment.Center,
   ) {
     Icon(
       modifier = Modifier
-        .size(44.dp)
+        .size(36.dp)
+        .align(Alignment.TopCenter)
         .scale(scaleX = if (forward) -1f else 1F, scaleY = 1f),
-      imageVector = VoiceIcons.Replay,
+      imageVector = VoiceIcons.BendArrow,
       contentDescription = stringResource(
         id = if (forward) {
           R.string.playback_action_fast_forward
@@ -50,8 +51,11 @@ internal fun SkipButton(
     )
     Text(
       text = seekTimeInSeconds.toString(),
-      style = MaterialTheme.typography.labelMedium,
-      modifier = Modifier.offset(y = 2.dp),
+      style = MaterialTheme.typography.labelLarge,
+      fontWeight = FontWeight.Bold,
+      modifier = Modifier
+        .align(if (forward) Alignment.BottomEnd else Alignment.BottomStart)
+        .offset(x = if (forward) (-4).dp else 4.dp, y = (-2).dp),
     )
   }
 }

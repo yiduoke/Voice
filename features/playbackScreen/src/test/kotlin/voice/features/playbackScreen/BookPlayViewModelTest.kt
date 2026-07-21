@@ -73,6 +73,7 @@ class BookPlayViewModelTest {
 
   private val player = mockk<PlayerController>()
   private val playbackPitchStore = MemoryDataStore(1F)
+  private var updatedBookContent: BookContent? = null
   private val playStateManager = mockk<PlayStateManager> {
     every { playStateFlow } returns MutableStateFlow(PlayStateManager.PlayState.Paused)
   }
@@ -84,6 +85,9 @@ class BookPlayViewModelTest {
     bookRepository = mockk {
       coEvery { get(book.id) } returns book
       every { flow(book.id) } returns MutableStateFlow(book)
+      coEvery { updateBook(book.id, any()) } coAnswers {
+        updatedBookContent = secondArg<(BookContent) -> BookContent>().invoke(book.content)
+      }
     },
     currentBookResolver = currentBookResolver,
     player = player.apply {
@@ -269,6 +273,7 @@ class BookPlayViewModelTest {
     verify(exactly = 1) {
       player.setSpeed(1.05F)
     }
+    assertEquals(expected = 1.05F, actual = updatedBookContent?.playbackSpeed)
 
     playbackPitchStore.updateData { 2F }
     viewModel.onPitchStep(0.05F)

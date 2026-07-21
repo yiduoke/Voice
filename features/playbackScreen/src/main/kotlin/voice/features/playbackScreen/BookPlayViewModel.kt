@@ -237,15 +237,22 @@ class BookPlayViewModel(
 
   fun onSpeedStep(delta: Float) {
     scope.launch {
-      val current = currentBook()?.content?.playbackSpeed ?: return@launch
-      player.setSpeed(steppedValue(current, delta, max = 3.5F))
+      var newSpeed: Float? = null
+      bookRepository.updateBook(bookId) {
+        val stepped = steppedValue(it.playbackSpeed, delta, max = 3.5F)
+        newSpeed = stepped
+        it.copy(playbackSpeed = stepped)
+      }
+      newSpeed?.let(player::setSpeed)
     }
   }
 
   fun onPitchStep(delta: Float) {
     scope.launch {
-      val current = playbackPitchStore.data.first()
-      player.setPitch(steppedValue(current, delta, max = 2F))
+      val newPitch = playbackPitchStore.updateData {
+        steppedValue(it, delta, max = 2F)
+      }
+      player.setPitch(newPitch)
     }
   }
 
