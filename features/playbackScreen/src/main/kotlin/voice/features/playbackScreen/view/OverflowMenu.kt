@@ -21,6 +21,7 @@ internal fun OverflowMenu(
   skipSilence: Boolean,
   onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
+  onClarityClick: () -> Unit,
 ) {
   Box {
     var expanded by remember { mutableStateOf(false) }
@@ -63,6 +64,15 @@ internal fun OverflowMenu(
         },
         text = {
           Text(text = stringResource(id = R.string.playback_option_volume_boost))
+        },
+      )
+      DropdownMenuItem(
+        onClick = {
+          expanded = false
+          onClarityClick()
+        },
+        text = {
+          Text(text = stringResource(id = R.string.clarity_title))
         },
       )
     }

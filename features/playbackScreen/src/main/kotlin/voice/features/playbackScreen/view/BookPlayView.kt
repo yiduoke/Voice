@@ -61,6 +61,7 @@ internal fun BookPlayView(
         onBookmarkLongClick = onBookmarkLongClick,
         onSkipSilenceClick = onSkipSilenceClick,
         onVolumeBoostClick = onVolumeBoostClick,
+        onClarityClick = onClarityOpen,
         onCloseClick = onCloseClick,
         useLandscapeLayout = useLandscapeLayout,
       )

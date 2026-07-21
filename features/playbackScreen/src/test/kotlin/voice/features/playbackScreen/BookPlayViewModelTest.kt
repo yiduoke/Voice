@@ -20,10 +20,10 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.Book
 import voice.core.data.BookContent
 import voice.core.data.BookId
-import voice.core.data.ClaritySettings
 import voice.core.data.Bookmark
 import voice.core.data.Chapter
 import voice.core.data.ChapterId
+import voice.core.data.ClaritySettings
 import voice.core.data.KioskModeDemoData
 import voice.core.data.MarkData
 import voice.core.data.sleeptimer.SleepTimerPreference

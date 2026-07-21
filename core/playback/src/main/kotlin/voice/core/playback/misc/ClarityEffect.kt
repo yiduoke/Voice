@@ -12,9 +12,9 @@ object ClarityLevels {
 
   const val MAX_LEVEL = 10
 
-  fun subBassGainDb(rumble: Int): Float = -1.5F * rumble
+  fun subBassGainDb(rumble: Int): Float = 0F - 1.5F * rumble
 
-  fun bassGainDb(rumble: Int): Float = -1.0F * rumble
+  fun bassGainDb(rumble: Int): Float = 0F - 1.0F * rumble
 
   fun presenceGainDb(presence: Int): Float = 0.9F * presence
 

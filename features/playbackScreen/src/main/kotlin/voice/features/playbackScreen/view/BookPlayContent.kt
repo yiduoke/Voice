@@ -1,5 +1,6 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import voice.core.data.BookId
 import voice.features.playbackScreen.BookPlayViewState
@@ -35,8 +37,30 @@ internal fun BookPlayContent(
   onClarityOpen: () -> Unit,
   useLandscapeLayout: Boolean,
 ) {
+  val claritySwipeModifier = Modifier.pointerInput(Unit) {
+    val threshold = -64.dp.toPx()
+    var total = 0F
+    var triggered = false
+    detectVerticalDragGestures(
+      onDragStart = {
+        total = 0F
+        triggered = false
+      },
+      onVerticalDrag = { _, dragAmount ->
+        total += dragAmount
+        if (!triggered && total < threshold) {
+          triggered = true
+          onClarityOpen()
+        }
+      },
+    )
+  }
   if (useLandscapeLayout) {
-    Row(Modifier.padding(contentPadding)) {
+    Row(
+      Modifier
+        .padding(contentPadding)
+        .then(claritySwipeModifier),
+    ) {
       CoverRow(
         bookId = bookId,
         cover = viewState.cover,
@@ -84,7 +108,7 @@ internal fun BookPlayContent(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         )
-        ClarityHandle(onOpen = onClarityOpen)
+        Spacer(modifier = Modifier.size(16.dp))
         PlaybackRow(
           playing = viewState.playing,
           seekTimeInSeconds = viewState.seekTimeInSeconds,
@@ -95,7 +119,11 @@ internal fun BookPlayContent(
       }
     }
   } else {
-    Column(Modifier.padding(contentPadding)) {
+    Column(
+      Modifier
+        .padding(contentPadding)
+        .then(claritySwipeModifier),
+    ) {
       CoverRow(
         bookId = bookId,
         onPlayClick = onPlayClick,
@@ -138,7 +166,7 @@ internal fun BookPlayContent(
           .fillMaxWidth()
           .padding(horizontal = 16.dp),
       )
-      ClarityHandle(onOpen = onClarityOpen)
+      Spacer(modifier = Modifier.size(16.dp))
       PlaybackRow(
         playing = viewState.playing,
         seekTimeInSeconds = viewState.seekTimeInSeconds,

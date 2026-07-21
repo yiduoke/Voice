@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -76,37 +76,6 @@ internal fun ClaritySheetContent(
       onValueChange = onCompressionChange,
     )
     Spacer(modifier = Modifier.size(16.dp))
-  }
-}
-
-@Composable
-internal fun ClarityHandle(
-  onOpen: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  val label = stringResource(id = StringsR.string.clarity_title)
-  Box(
-    modifier = modifier
-      .fillMaxWidth()
-      .clickable(onClickLabel = label, onClick = onOpen)
-      .pointerInput(Unit) {
-        detectVerticalDragGestures { _, dragAmount ->
-          if (dragAmount < -12) {
-            onOpen()
-          }
-        }
-      }
-      .padding(vertical = 10.dp),
-    contentAlignment = Alignment.Center,
-  ) {
-    Box(
-      Modifier
-        .size(width = 48.dp, height = 5.dp)
-        .background(
-          MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5F),
-          RoundedCornerShape(2.5.dp),
-        ),
-    )
   }
 }
 

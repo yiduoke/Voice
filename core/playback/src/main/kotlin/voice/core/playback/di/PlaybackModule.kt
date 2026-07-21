@@ -1,6 +1,7 @@
 package voice.core.playback.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.Player
@@ -15,7 +16,6 @@ import androidx.media3.session.MediaLibraryService
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import androidx.datastore.core.DataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

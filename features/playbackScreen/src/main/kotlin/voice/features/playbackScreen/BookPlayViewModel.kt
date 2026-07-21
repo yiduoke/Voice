@@ -19,13 +19,13 @@ import voice.core.common.DispatcherProvider
 import voice.core.common.MainScope
 import voice.core.data.Book
 import voice.core.data.BookId
+import voice.core.data.ClaritySettings
 import voice.core.data.KioskModeDemoData
 import voice.core.data.durationMs
 import voice.core.data.markForPosition
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
-import voice.core.data.ClaritySettings
 import voice.core.data.store.ClaritySettingsStore
 import voice.core.data.store.CurrentBookStore
 import voice.core.data.store.PlaybackPitchStore
