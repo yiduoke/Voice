@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import voice.core.strings.R
 import voice.core.ui.icons.VoiceIcons
 
@@ -26,15 +27,24 @@ internal fun SkipButton(
   seekTimeInSeconds: Int,
   onClick: () -> Unit,
 ) {
-  Box(
-    modifier = Modifier
-      .clickable(
-        interactionSource = remember { MutableInteractionSource() },
-        indication = ripple(bounded = false),
-        onClick = onClick,
-      )
-      .size(48.dp),
-  ) {
+  SkipIcon(
+    forward = forward,
+    seekTimeInSeconds = seekTimeInSeconds,
+    modifier = Modifier.clickable(
+      interactionSource = remember { MutableInteractionSource() },
+      indication = ripple(bounded = false),
+      onClick = onClick,
+    ),
+  )
+}
+
+@Composable
+internal fun SkipIcon(
+  forward: Boolean,
+  seekTimeInSeconds: Int,
+  modifier: Modifier = Modifier,
+) {
+  Box(modifier.size(48.dp)) {
     Icon(
       modifier = Modifier
         .size(44.dp)
@@ -52,10 +62,11 @@ internal fun SkipButton(
     Text(
       text = seekTimeInSeconds.toString(),
       style = MaterialTheme.typography.labelLarge,
+      fontSize = 16.sp,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
         .align(if (forward) Alignment.BottomEnd else Alignment.BottomStart)
-        .offset(x = if (forward) (-7).dp else 7.dp, y = (-6).dp),
+        .offset(x = if (forward) (-8).dp else 8.dp, y = (-3).dp),
     )
   }
 }

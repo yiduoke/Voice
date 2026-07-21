@@ -2,6 +2,7 @@ plugins {
   id("voice.library")
   id("voice.compose")
   alias(libs.plugins.metro)
+  alias(libs.plugins.roborazzi)
 }
 
 dependencies {
@@ -21,4 +22,8 @@ dependencies {
 
   testImplementation(libs.molecule)
   testImplementation(libs.turbine)
+  testImplementation(libs.roborazzi)
+  testImplementation(libs.roborazzi.compose)
+  testImplementation(libs.compose.ui.testJunit)
+  testImplementation(libs.compose.ui.testManifest)
 }

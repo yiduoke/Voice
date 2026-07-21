@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -137,21 +137,12 @@ internal fun Cover(
               CoverTapFeedback.Rewind,
               CoverTapFeedback.FastForward,
               -> {
-                val forward = shownFeedback == CoverTapFeedback.FastForward
-                Icon(
-                  imageVector = VoiceIcons.Replay,
-                  contentDescription = null,
-                  tint = Color.White,
-                  modifier = Modifier
-                    .size(36.dp)
-                    .scale(scaleX = if (forward) -1f else 1f, scaleY = 1f),
-                )
-                Text(
-                  text = seekTimeInSeconds.toString(),
-                  style = MaterialTheme.typography.labelSmall,
-                  color = Color.White,
-                  modifier = Modifier.padding(top = 3.dp),
-                )
+                CompositionLocalProvider(LocalContentColor provides Color.White) {
+                  SkipIcon(
+                    forward = shownFeedback == CoverTapFeedback.FastForward,
+                    seekTimeInSeconds = seekTimeInSeconds,
+                  )
+                }
               }
             }
           }

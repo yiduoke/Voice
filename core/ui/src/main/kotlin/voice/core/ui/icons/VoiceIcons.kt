@@ -2484,19 +2484,18 @@ object VoiceIcons {
           fillAlpha = 1f,
           stroke = SolidColor(Color.Black),
           strokeAlpha = 1f,
-          strokeLineWidth = 2f,
+          strokeLineWidth = 2.8f,
           strokeLineCap = StrokeCap.Round,
           strokeLineJoin = StrokeJoin.Round,
           strokeLineMiter = 1f,
           pathFillType = PathFillType.NonZero,
         ) {
-          moveTo(9f, 14f)
-          lineToRelative(-4f, -4f)
-          lineToRelative(4f, -4f)
-          moveTo(5f, 10f)
-          horizontalLineToRelative(11f)
-          arcToRelative(4f, 4f, 0f, isMoreThanHalf = true, isPositiveArc = true, 0f, 8f)
-          horizontalLineToRelative(-1f)
+          moveTo(6.5f, 9f)
+          lineToRelative(-3f, -3f)
+          lineToRelative(3f, -3f)
+          moveTo(15.997f, 17.918f)
+          arcToRelative(6f, 6f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.997f, -11.918f)
+          horizontalLineToRelative(-11.5f)
         }
       }
       .build()
