@@ -20,6 +20,7 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.Book
 import voice.core.data.BookContent
 import voice.core.data.BookId
+import voice.core.data.ClaritySettings
 import voice.core.data.Bookmark
 import voice.core.data.Chapter
 import voice.core.data.ChapterId
@@ -73,6 +74,7 @@ class BookPlayViewModelTest {
 
   private val player = mockk<PlayerController>()
   private val playbackPitchStore = MemoryDataStore(1F)
+  private val claritySettingsStore = MemoryDataStore(ClaritySettings.Default)
   private var updatedBookContent: BookContent? = null
   private val playStateManager = mockk<PlayStateManager> {
     every { playStateFlow } returns MutableStateFlow(PlayStateManager.PlayState.Paused)
@@ -113,6 +115,7 @@ class BookPlayViewModelTest {
     sleepTimerPreferenceStore = sleepTimerDataStore,
     playbackPitchStore = playbackPitchStore,
     seekTimeStore = MemoryDataStore(20),
+    claritySettingsStore = claritySettingsStore,
     bookId = book.id,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
     experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
@@ -291,6 +294,21 @@ class BookPlayViewModelTest {
   }
 
   @Test
+  fun `clarity changes write the store`() = scope.runTest {
+    viewModel.onClarityToggle(true)
+    yield()
+    assertEquals(expected = true, actual = claritySettingsStore.data.first().enabled)
+
+    viewModel.onClarityRumbleChange(7.4F)
+    yield()
+    assertEquals(expected = 7, actual = claritySettingsStore.data.first().rumble)
+
+    viewModel.onClarityCompressionChange(11F)
+    yield()
+    assertEquals(expected = 10, actual = claritySettingsStore.data.first().compression)
+  }
+
+  @Test
   fun `overlay prefers live controller position`() {
     val persistedBook = book()
     val overlaidBook = persistedBook.overlay(
@@ -400,6 +418,7 @@ class BookPlayViewModelTest {
       sleepTimerPreferenceStore = sleepTimerDataStore,
       playbackPitchStore = MemoryDataStore(1F),
       seekTimeStore = MemoryDataStore(20),
+      claritySettingsStore = MemoryDataStore(ClaritySettings.Default),
       bookId = book.id,
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(experimentalPlaybackPersistence),

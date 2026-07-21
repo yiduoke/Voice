@@ -1,5 +1,6 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import voice.core.ui.icons.VoiceIcons
@@ -35,7 +37,10 @@ internal fun TuningRow(
   modifier: Modifier = Modifier,
 ) {
   val formatter = remember { DecimalFormat("0.##") }
-  OutlinedCard(modifier = modifier) {
+  OutlinedCard(
+    border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.onSurface),
+    modifier = modifier,
+  ) {
     StepperRow(
       label = stringResource(id = StringsR.string.playback_tuning_speed),
       valueFormatted = formatter.format(playbackSpeed) + "×",
@@ -70,24 +75,27 @@ private fun StepperRow(
   ) {
     Text(
       text = label,
-      style = MaterialTheme.typography.bodyMedium,
-      modifier = Modifier.width(56.dp),
+      style = MaterialTheme.typography.titleMedium,
+      fontWeight = FontWeight.Bold,
+      modifier = Modifier.width(64.dp),
     )
     OutlinedIconButton(
       onClick = onDecrement,
       shape = RoundedCornerShape(12.dp),
+      border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
       modifier = Modifier
         .width(52.dp)
         .height(44.dp),
     ) {
       Icon(
-        imageVector = VoiceIcons.Remove,
+        imageVector = VoiceIcons.RemoveThick,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_decrease),
       )
     }
     Text(
       text = valueFormatted,
       style = MaterialTheme.typography.titleMedium,
+      fontWeight = FontWeight.Bold,
       textAlign = TextAlign.Center,
       modifier = Modifier
         .weight(1F)
@@ -97,12 +105,13 @@ private fun StepperRow(
     OutlinedIconButton(
       onClick = onIncrement,
       shape = RoundedCornerShape(12.dp),
+      border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
       modifier = Modifier
         .width(52.dp)
         .height(44.dp),
     ) {
       Icon(
-        imageVector = VoiceIcons.Add,
+        imageVector = VoiceIcons.AddThick,
         contentDescription = stringResource(id = StringsR.string.playback_tuning_increase),
       )
     }

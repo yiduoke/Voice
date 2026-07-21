@@ -2470,6 +2470,34 @@ object VoiceIcons {
       }
       .build()
 
+  val AddThick: ImageVector =
+    ImageVector.Builder(
+      name = "AddThick",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = null,
+          fillAlpha = 1f,
+          stroke = SolidColor(Color.Black),
+          strokeAlpha = 1f,
+          strokeLineWidth = 2.8f,
+          strokeLineCap = StrokeCap.Round,
+          strokeLineJoin = StrokeJoin.Round,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(12f, 5.5f)
+          verticalLineTo(18.5f)
+          moveTo(5.5f, 12f)
+          horizontalLineTo(18.5f)
+        }
+      }
+      .build()
+
   val BendArrow: ImageVector =
     ImageVector.Builder(
       name = "BendArrow",
@@ -2496,6 +2524,32 @@ object VoiceIcons {
           moveTo(15.997f, 17.918f)
           arcToRelative(6f, 6f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.997f, -11.918f)
           horizontalLineToRelative(-11.5f)
+        }
+      }
+      .build()
+
+  val RemoveThick: ImageVector =
+    ImageVector.Builder(
+      name = "RemoveThick",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = null,
+          fillAlpha = 1f,
+          stroke = SolidColor(Color.Black),
+          strokeAlpha = 1f,
+          strokeLineWidth = 2.8f,
+          strokeLineCap = StrokeCap.Round,
+          strokeLineJoin = StrokeJoin.Round,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(5.5f, 12f)
+          horizontalLineTo(18.5f)
         }
       }
       .build()

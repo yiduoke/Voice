@@ -49,3 +49,6 @@ public annotation class FeatureFlagOverridesStore
 
 @Qualifier
 public annotation class PlaybackPitchStore
+
+@Qualifier
+public annotation class ClaritySettingsStore

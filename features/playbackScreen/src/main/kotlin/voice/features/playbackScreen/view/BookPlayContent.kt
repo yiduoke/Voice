@@ -32,6 +32,7 @@ internal fun BookPlayContent(
   onPitchStep: (Float) -> Unit,
   onSpeedValueClick: () -> Unit,
   onPitchValueClick: () -> Unit,
+  onClarityOpen: () -> Unit,
   useLandscapeLayout: Boolean,
 ) {
   if (useLandscapeLayout) {
@@ -83,7 +84,7 @@ internal fun BookPlayContent(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         )
-        Spacer(modifier = Modifier.size(16.dp))
+        ClarityHandle(onOpen = onClarityOpen)
         PlaybackRow(
           playing = viewState.playing,
           seekTimeInSeconds = viewState.seekTimeInSeconds,
@@ -137,7 +138,7 @@ internal fun BookPlayContent(
           .fillMaxWidth()
           .padding(horizontal = 16.dp),
       )
-      Spacer(modifier = Modifier.size(16.dp))
+      ClarityHandle(onOpen = onClarityOpen)
       PlaybackRow(
         playing = viewState.playing,
         seekTimeInSeconds = viewState.seekTimeInSeconds,

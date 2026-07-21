@@ -14,6 +14,7 @@ import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import voice.core.data.BookId
+import voice.core.data.ClaritySettings
 import voice.core.data.GridMode
 import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
@@ -199,6 +200,13 @@ public interface StoreModule {
   @PlaybackPitchStore
   private fun playbackPitch(factory: VoiceDataStoreFactory): DataStore<Float> {
     return factory.create(Float.serializer(), 1F, "playbackPitch")
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  @ClaritySettingsStore
+  private fun claritySettings(factory: VoiceDataStoreFactory): DataStore<ClaritySettings> {
+    return factory.create(ClaritySettings.serializer(), ClaritySettings.Default, "claritySettings")
   }
 
   @Provides

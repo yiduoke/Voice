@@ -1,5 +1,7 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -9,11 +11,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import voice.core.data.BookId
+import voice.core.data.ClaritySettings
 import voice.core.ui.VoiceTheme
 import voice.features.playbackScreen.BookPlayViewState
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BookPlayView(
   viewState: BookPlayViewState,
@@ -32,6 +36,13 @@ internal fun BookPlayView(
   onPitchClick: () -> Unit,
   onSpeedStep: (Float) -> Unit,
   onPitchStep: (Float) -> Unit,
+  claritySheetVisible: Boolean,
+  onClarityOpen: () -> Unit,
+  onClarityDismiss: () -> Unit,
+  onClarityToggle: (Boolean) -> Unit,
+  onClarityRumbleChange: (Float) -> Unit,
+  onClarityPresenceChange: (Float) -> Unit,
+  onClarityCompressionChange: (Float) -> Unit,
   onSkipToNext: () -> Unit,
   onSkipToPrevious: () -> Unit,
   onCloseClick: () -> Unit,
@@ -70,10 +81,22 @@ internal fun BookPlayView(
         onPitchStep = onPitchStep,
         onSpeedValueClick = onSpeedChangeClick,
         onPitchValueClick = onPitchClick,
+        onClarityOpen = onClarityOpen,
         useLandscapeLayout = useLandscapeLayout,
       )
     },
   )
+  if (claritySheetVisible) {
+    ModalBottomSheet(onDismissRequest = onClarityDismiss) {
+      ClaritySheetContent(
+        clarity = viewState.clarity,
+        onToggle = onClarityToggle,
+        onRumbleChange = onClarityRumbleChange,
+        onPresenceChange = onClarityPresenceChange,
+        onCompressionChange = onClarityCompressionChange,
+      )
+    }
+  }
 }
 
 @Composable
@@ -99,6 +122,13 @@ private fun BookPlayPreview(
       onPitchClick = {},
       onSpeedStep = {},
       onPitchStep = {},
+      claritySheetVisible = false,
+      onClarityOpen = {},
+      onClarityDismiss = {},
+      onClarityToggle = {},
+      onClarityRumbleChange = {},
+      onClarityPresenceChange = {},
+      onClarityCompressionChange = {},
       onSkipToNext = {},
       onSkipToPrevious = {},
       onCloseClick = {},
@@ -123,6 +153,7 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       playbackSpeed = 1.2F,
       pitch = 1.4F,
       seekTimeInSeconds = 30,
+      clarity = ClaritySettings.Default,
     )
     yield(initial)
     yield(

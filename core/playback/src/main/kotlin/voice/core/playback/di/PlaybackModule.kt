@@ -15,11 +15,16 @@ import androidx.media3.session.MediaLibraryService
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
+import androidx.datastore.core.DataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import voice.core.data.ClaritySettings
+import voice.core.data.store.ClaritySettingsStore
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.Media3AudioOffloadFeatureFlagQualifier
+import voice.core.playback.misc.ClarityEffect
 import voice.core.playback.misc.VolumeGain
 import voice.core.playback.notification.MainActivityIntentProvider
 import voice.core.playback.player.DurationInconsistenciesUpdater
@@ -53,6 +58,9 @@ interface PlaybackModule {
     playStateDelegatingListener: PlayStateDelegatingListener,
     positionUpdater: PositionUpdater,
     volumeGain: VolumeGain,
+    clarityEffect: ClarityEffect,
+    @ClaritySettingsStore clarityStore: DataStore<ClaritySettings>,
+    scope: CoroutineScope,
     durationInconsistenciesUpdater: DurationInconsistenciesUpdater,
     @Media3AudioOffloadFeatureFlagQualifier media3AudioOffloadFeatureFlag: FeatureFlag<Boolean>,
   ): Player {
@@ -84,6 +92,10 @@ interface PlaybackModule {
         durationInconsistenciesUpdater.attachTo(player)
         player.onAudioSessionIdChanged {
           volumeGain.audioSessionId = it
+          clarityEffect.audioSessionId = it
+        }
+        scope.launch {
+          clarityStore.data.collect { clarityEffect.settings = it }
         }
       }
   }

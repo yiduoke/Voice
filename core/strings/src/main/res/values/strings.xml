@@ -183,6 +183,14 @@
     <string name="playback.option.volume_boost">Volume boost</string>
     <!-- Title and content description for playback-speed controls. -->
     <string name="playback.speed.title">Playback speed</string>
+    <!-- Title and toggle label for the clarity audio enhancement sheet. -->
+    <string name="clarity.title">Clarity</string>
+    <!-- Slider label for cutting low-frequency rumble. -->
+    <string name="clarity.rumble">Reduce rumble</string>
+    <!-- Slider label for boosting the speech presence band. -->
+    <string name="clarity.presence">Boost clarity</string>
+    <!-- Slider label for dynamic range compression. -->
+    <string name="clarity.compression">Even out volume</string>
     <!-- Content description for stepper buttons that decrease speed or pitch. -->
     <string name="playback.tuning.decrease">Decrease</string>
     <!-- Content description for stepper buttons that increase speed or pitch. -->

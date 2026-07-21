@@ -25,6 +25,8 @@ import voice.core.data.markForPosition
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
+import voice.core.data.ClaritySettings
+import voice.core.data.store.ClaritySettingsStore
 import voice.core.data.store.CurrentBookStore
 import voice.core.data.store.PlaybackPitchStore
 import voice.core.data.store.SeekTimeStore
@@ -74,6 +76,8 @@ class BookPlayViewModel(
   private val playbackPitchStore: DataStore<Float>,
   @SeekTimeStore
   private val seekTimeStore: DataStore<Int>,
+  @ClaritySettingsStore
+  private val claritySettingsStore: DataStore<ClaritySettings>,
   @ExperimentalPlaybackPersistenceQualifier
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
@@ -89,6 +93,9 @@ class BookPlayViewModel(
 
   internal val dialogState: State<BookPlayDialogViewState?>
     field = mutableStateOf<BookPlayDialogViewState?>(null)
+
+  internal val claritySheetVisible: State<Boolean>
+    field = mutableStateOf(false)
 
   init {
     scope.launch {
@@ -134,6 +141,7 @@ class BookPlayViewModel(
 
     val pitch = remember { playbackPitchStore.data }.collectAsState(initial = 1F).value
     val seekTime = remember { seekTimeStore.data }.collectAsState(initial = 20).value
+    val clarity = remember { claritySettingsStore.data }.collectAsState(initial = ClaritySettings.Default).value
     val sleepTime = remember { sleepTimer.state }.collectAsState().value
     val hasMoreThanOneChapter = book.chapters.sumOf { it.chapterMarks.count() } > 1
     return BookPlayViewState(
@@ -149,6 +157,7 @@ class BookPlayViewModel(
       playbackSpeed = book.content.playbackSpeed,
       pitch = pitch,
       seekTimeInSeconds = seekTime,
+      clarity = clarity,
     )
   }
 
@@ -168,7 +177,38 @@ class BookPlayViewModel(
       playbackSpeed = 1F,
       pitch = 1F,
       seekTimeInSeconds = 30,
+      clarity = ClaritySettings.Default,
     )
+  }
+
+  fun showClaritySheet() {
+    claritySheetVisible.value = true
+  }
+
+  fun hideClaritySheet() {
+    claritySheetVisible.value = false
+  }
+
+  fun onClarityToggle(enabled: Boolean) {
+    updateClarity { it.copy(enabled = enabled) }
+  }
+
+  fun onClarityRumbleChange(value: Float) {
+    updateClarity { it.copy(rumble = value.roundToInt().coerceIn(0, 10)) }
+  }
+
+  fun onClarityPresenceChange(value: Float) {
+    updateClarity { it.copy(presence = value.roundToInt().coerceIn(0, 10)) }
+  }
+
+  fun onClarityCompressionChange(value: Float) {
+    updateClarity { it.copy(compression = value.roundToInt().coerceIn(0, 10)) }
+  }
+
+  private fun updateClarity(update: (ClaritySettings) -> ClaritySettings) {
+    scope.launch {
+      claritySettingsStore.updateData(update)
+    }
   }
 
   fun dismissDialog() {
