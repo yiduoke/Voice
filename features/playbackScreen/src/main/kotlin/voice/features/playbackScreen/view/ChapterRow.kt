@@ -1,5 +1,6 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -55,10 +56,14 @@ internal fun ChapterRow(
         Spacer(modifier = Modifier.size(28.dp))
       }
       Text(
-        modifier = Modifier.padding(horizontal = 4.dp),
+        modifier = Modifier
+          .weight(1F, fill = false)
+          .basicMarquee(initialDelayMillis = 2400)
+          .padding(horizontal = 4.dp),
         text = chapterName,
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
+        maxLines = 1,
       )
       if (nextPreviousVisible) {
         Icon(

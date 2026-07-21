@@ -95,7 +95,7 @@ class ComponentSnapshots {
       VoiceTheme {
         BookPlayView(
           viewState = BookPlayViewState(
-            chapterName = "Chapter one",
+            chapterName = "Part one, chapter one: Happy families are all alike",
             showPreviousNextButtons = true,
             cover = null,
             duration = 10.minutes,
@@ -103,7 +103,7 @@ class ComponentSnapshots {
             playing = true,
             skipSilence = false,
             sleepTimerState = BookPlayViewState.SleepTimerViewState.Disabled,
-            title = "Anna Karenina",
+            title = "Anna Karenina: Penguin Classics Unabridged Edition",
             playbackSpeed = 1.1F,
             pitch = 1F,
             seekTimeInSeconds = 20,
