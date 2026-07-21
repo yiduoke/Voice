@@ -37,7 +37,7 @@ internal fun SkipButton(
   ) {
     Icon(
       modifier = Modifier
-        .size(36.dp)
+        .size(44.dp)
         .align(Alignment.TopCenter)
         .scale(scaleX = if (forward) -1f else 1F, scaleY = 1f),
       imageVector = VoiceIcons.BendArrow,
@@ -55,7 +55,7 @@ internal fun SkipButton(
       fontWeight = FontWeight.Bold,
       modifier = Modifier
         .align(if (forward) Alignment.BottomEnd else Alignment.BottomStart)
-        .offset(x = if (forward) (-4).dp else 4.dp, y = (-2).dp),
+        .offset(x = if (forward) (-7).dp else 7.dp, y = (-6).dp),
     )
   }
 }
