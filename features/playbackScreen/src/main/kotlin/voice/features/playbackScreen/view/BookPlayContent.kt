@@ -38,7 +38,7 @@ internal fun BookPlayContent(
   useLandscapeLayout: Boolean,
 ) {
   val claritySwipeModifier = Modifier.pointerInput(Unit) {
-    val threshold = -120.dp.toPx()
+    val threshold = -240.dp.toPx()
     var total = 0F
     var triggered = false
     detectVerticalDragGestures(
